@@ -1,6 +1,6 @@
 package com.etiya.telekomaktivasyon.controller;
 
-import com.etiya.telekomaktivasyon.entity.PackageEntity;
+import com.etiya.telekomaktivasyon.dto.PackageResponseDto;
 import com.etiya.telekomaktivasyon.service.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ public class PackageController {
     private PackageService packageService;
 
     @GetMapping
-    public List<PackageEntity> getActivePackages() {
+    public List<PackageResponseDto> getActivePackages() {
         return packageService.getActivePackages();
     }
 }
