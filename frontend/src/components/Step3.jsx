@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function Step3({ cartId, onBack }) {
+function Step3({ cartId, onBack, onOrderCreated }) {
     const [city, setCity] = useState('');
     const [district, setDistrict] = useState('');
     const [addressLine, setAddressLine] = useState('');
@@ -8,9 +8,26 @@ function Step3({ cartId, onBack }) {
     const [customerName, setCustomerName] = useState('');
     const [tckn, setTckn] = useState('');
     const [message, setMessage] = useState('');
-    const [order, setOrder] = useState(null);
+
+    const validate = () => {
+        if (!customerName.trim() || !city.trim() || !district.trim() || !addressLine.trim()) {
+            return 'Lütfen tüm alanları doldurun.';
+        }
+        if (!/^\d{11}$/.test(tckn)) {
+            return 'TCKN tam olarak 11 haneli rakamlardan oluşmalı.';
+        }
+        if (!/^\d{5}$/.test(postalCode)) {
+            return 'Posta kodu tam olarak 5 haneli rakamlardan oluşmalı.';
+        }
+        return null;
+    };
 
     const submitOrder = () => {
+        const validationError = validate();
+        if (validationError) {
+            setMessage(validationError);
+            return;
+        }
         setMessage('');
 
         fetch('http://localhost:8080/api/addresses', {
@@ -39,20 +56,10 @@ function Step3({ cartId, onBack }) {
                 return res.json();
             })
             .then((createdOrder) => {
-                setOrder(createdOrder);
+                onOrderCreated(createdOrder);
             })
             .catch((err) => setMessage(err.message));
     };
-
-    if (order) {
-        return (
-            <div>
-                <h2>Başvurun Alındı</h2>
-                <p>Sipariş No: {order.id}</p>
-                <p>Durum: {order.status}</p>
-            </div>
-        );
-    }
 
     return (
         <div>
