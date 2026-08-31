@@ -80,6 +80,7 @@ public class CartService {
 
         simCard.setStatus("reserved");
         simCard.setIsReserved(true);
+        simCard.setReservedAt(LocalDateTime.now());
         simCardRepository.save(simCard);
 
         CartItem item = new CartItem();

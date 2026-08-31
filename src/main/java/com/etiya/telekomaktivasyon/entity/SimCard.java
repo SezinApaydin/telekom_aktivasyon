@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "sim_cards", schema = "telekom")
@@ -29,4 +30,7 @@ public class SimCard {
 
     @Column(name = "is_reserved", nullable = false)
     private Boolean isReserved;
+
+    @Column(name = "reserved_at")
+    private LocalDateTime reservedAt;
 }
