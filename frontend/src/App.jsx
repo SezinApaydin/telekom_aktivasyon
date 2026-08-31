@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Step1 from './components/Step1';
 import Step2 from './components/Step2';
+import Step3 from './components/Step3';
 
 function App() {
   const [cartId, setCartId] = useState(null);
@@ -23,8 +24,7 @@ function App() {
         <h1>Hat Aktivasyon Başvurusu</h1>
         {step === 1 && <Step1 cartId={cartId} onNext={() => setStep(2)} />}
         {step === 2 && <Step2 cartId={cartId} onNext={() => setStep(3)} onBack={() => setStep(1)} />}
-        {step === 3 && <p>Adım 3 (adres formu) — Gün 19'da ekleyeceğiz.</p>}
-      </div>
+        {step === 3 && <Step3 cartId={cartId} onBack={() => setStep(2)} />}      </div>
   );
 }
 
