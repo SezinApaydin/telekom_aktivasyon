@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+
+    <changeSet id="001-sim-cards-initial" author="sezin">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="sim_cards" schemaName="telekom"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="sim_cards" schemaName="telekom">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="msisdn" type="varchar(15)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="sim_cards_new_msisdn_key"/>
+            </column>
+            <column name="iccid" type="varchar(22)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="sim_cards_new_iccid_key"/>
+            </column>
+            <column name="status" type="varchar(20)" defaultValue="available">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_reserved" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reserved_at" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <sql>
+            ALTER TABLE telekom.sim_cards
+                ADD CONSTRAINT sim_cards_new_status_check
+                    CHECK (((status)::text = ANY ((ARRAY['available'::character varying, 'reserved'::character varying, 'activated'::character varying])::text[])));
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>

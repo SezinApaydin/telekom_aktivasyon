@@ -1,0 +1,19 @@
+{
+  "id": 123,
+  "customerIndentifier": "test-musteri-1",
+  "status": "active",
+  "created_at": "2026-08-18 11:45:42.779",
+  "items": [{
+    "id": 123,
+    "name": "iphone 15",
+    "type": "DEVICE", ---DEVICE, PACKAGE, SIM_CARD
+    "properties": [{
+      "id": 123,
+      "propertyName": "brand",
+      "propertyValue": "iphone",
+
+    }],
+
+  }],:  --- Item diye ayrı  json oblectler koyulacak
+
+}

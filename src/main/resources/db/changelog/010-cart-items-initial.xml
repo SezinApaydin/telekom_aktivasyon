@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+
+    <changeSet id="010-cart-items-initial" author="sezin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="cart_items" schemaName="telekom"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="cart_items" schemaName="telekom">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cart_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_type" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="package_id" type="int"/>
+            <column name="device_id" type="int"/>
+            <column name="sim_card_id" type="int"/>
+            <column name="quantity" type="int" defaultValueNumeric="1">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE telekom.cart_items ADD CONSTRAINT cart_items_item_type_check CHECK (item_type IN ('package', 'device', 'sim'));</sql>
+
+        <addForeignKeyConstraint
+                baseTableSchemaName="telekom" baseTableName="cart_items" baseColumnNames="cart_id"
+                referencedTableSchemaName="telekom" referencedTableName="cart" referencedColumnNames="id"
+                constraintName="cart_items_cart_id_fkey"/>
+        <addForeignKeyConstraint
+                baseTableSchemaName="telekom" baseTableName="cart_items" baseColumnNames="device_id"
+                referencedTableSchemaName="telekom" referencedTableName="devices" referencedColumnNames="id"
+                constraintName="cart_items_device_id_fkey"/>
+        <addForeignKeyConstraint
+                baseTableSchemaName="telekom" baseTableName="cart_items" baseColumnNames="package_id"
+                referencedTableSchemaName="telekom" referencedTableName="packages" referencedColumnNames="id"
+                constraintName="cart_items_package_id_fkey"/>
+        <addForeignKeyConstraint
+                baseTableSchemaName="telekom" baseTableName="cart_items" baseColumnNames="sim_card_id"
+                referencedTableSchemaName="telekom" referencedTableName="sim_cards" referencedColumnNames="id"
+                constraintName="cart_items_sim_card_id_fkey"/>
+    </changeSet>
+
+</databaseChangeLog>

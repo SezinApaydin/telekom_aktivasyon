@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+
+    <changeSet id="004-insert-packages-data" author="sezin">
+
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM telekom.packages</sqlCheck>
+        </preConditions>
+
+        <insert tableName="packages" schemaName="telekom">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Ekonomik 10GB"/>
+            <column name="monthly_price" valueNumeric="99.9"/>
+            <column name="data_quota_gb" valueNumeric="10"/>
+            <column name="minutes" valueNumeric="500"/>
+            <column name="sms_count" valueNumeric="250"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="packages" schemaName="telekom">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Standart 20GB"/>
+            <column name="monthly_price" valueNumeric="149.9"/>
+            <column name="data_quota_gb" valueNumeric="20"/>
+            <column name="minutes" valueNumeric="1000"/>
+            <column name="sms_count" valueNumeric="500"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="packages" schemaName="telekom">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Sınırsız Premium"/>
+            <column name="monthly_price" valueNumeric="249.9"/>
+            <column name="data_quota_gb" valueNumeric="50"/>
+            <column name="minutes" valueNumeric="2000"/>
+            <column name="sms_count" valueNumeric="1000"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="packages" schemaName="telekom">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Öğrenci Paketi"/>
+            <column name="monthly_price" valueNumeric="79.9"/>
+            <column name="data_quota_gb" valueNumeric="8"/>
+            <column name="minutes" valueNumeric="300"/>
+            <column name="sms_count" valueNumeric="100"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+
+        <sql>
+            SELECT setval(
+                           pg_get_serial_sequence('telekom.packages', 'id'),
+                           (SELECT MAX(id) FROM telekom.packages)
+                   );
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>

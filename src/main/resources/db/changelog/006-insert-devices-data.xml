@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+
+    <changeSet id="006-insert-devices-data" author="sezin">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM telekom.devices</sqlCheck>
+        </preConditions>
+
+        <insert tableName="devices" schemaName="telekom">
+            <column name="id" valueNumeric="1"/>
+            <column name="brand" value="Apple"/>
+            <column name="model" value="iPhone 15"/>
+            <column name="price" valueNumeric="45000"/>
+            <column name="stock_quantity" valueNumeric="12"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="devices" schemaName="telekom">
+            <column name="id" valueNumeric="2"/>
+            <column name="brand" value="Samsung"/>
+            <column name="model" value="Galaxy S24"/>
+            <column name="price" valueNumeric="38000"/>
+            <column name="stock_quantity" valueNumeric="20"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="devices" schemaName="telekom">
+            <column name="id" valueNumeric="3"/>
+            <column name="brand" value="Xiaomi"/>
+            <column name="model" value="Redmi Note 13"/>
+            <column name="price" valueNumeric="12000"/>
+            <column name="stock_quantity" valueNumeric="35"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+
+        <sql>SELECT setval(pg_get_serial_sequence('telekom.devices', 'id'), (SELECT MAX(id) FROM telekom.devices));</sql>
+    </changeSet>
+
+</databaseChangeLog>

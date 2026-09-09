@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+
+    <changeSet id="002-insert-sim-card-data" author="sezin">
+
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM telekom.sim_cards</sqlCheck>
+        </preConditions>
+
+        <insert tableName="sim_cards" schemaName="telekom">
+            <column name="id" valueNumeric="1"/>
+            <column name="msisdn" value="5321112233"/>
+            <column name="iccid" value="8990011234567890123"/>
+            <column name="status" value="activated"/>
+            <column name="is_reserved" valueBoolean="false"/>
+            <column name="reserved_at" type="timestamp"/>
+        </insert>
+
+        <insert tableName="sim_cards" schemaName="telekom">
+            <column name="id" valueNumeric="2"/>
+            <column name="msisdn" value="5321112244"/>
+            <column name="iccid" value="8990011234567890124"/>
+            <column name="status" value="available"/>
+            <column name="is_reserved" valueBoolean="false"/>
+            <column name="reserved_at" type="timestamp"/>
+        </insert>
+
+        <insert tableName="sim_cards" schemaName="telekom">
+            <column name="id" valueNumeric="3"/>
+            <column name="msisdn" value="5321112255"/>
+            <column name="iccid" value="8990011234567890125"/>
+            <column name="status" value="available"/>
+            <column name="is_reserved" valueBoolean="false"/>
+            <column name="reserved_at" type="timestamp"/>
+        </insert>
+
+        <insert tableName="sim_cards" schemaName="telekom">
+            <column name="id" valueNumeric="4"/>
+            <column name="msisdn" value="5321112266"/>
+            <column name="iccid" value="8990011234567890126"/>
+            <column name="status" value="available"/>
+            <column name="is_reserved" valueBoolean="false"/>
+            <column name="reserved_at" type="timestamp"/>
+        </insert>
+
+        <insert tableName="sim_cards" schemaName="telekom">
+            <column name="id" valueNumeric="5"/>
+            <column name="msisdn" value="5321112277"/>
+            <column name="iccid" value="8990011234567890127"/>
+            <column name="status" value="activated"/>
+            <column name="is_reserved" valueBoolean="true"/>
+            <column name="reserved_at" valueDate="2026-08-31T13:27:56.455"/>
+        </insert>
+
+        <sql>
+            SELECT setval(
+                           pg_get_serial_sequence('telekom.sim_cards', 'id'),
+                           (SELECT MAX(id) FROM telekom.sim_cards)
+                   );
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>
