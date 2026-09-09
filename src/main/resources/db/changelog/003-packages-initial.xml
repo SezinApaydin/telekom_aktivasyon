@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+
+    <changeSet id="003-packages-initial" author="sezin">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="packages" schemaName="telekom"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="packages" schemaName="telekom">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="monthly_price" type="numeric(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_quota_gb" type="int4"/>
+            <column name="minutes" type="int4"/>
+            <column name="sms_count" type="int4"/>
+            <column name="is_active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

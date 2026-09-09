@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+
+    <changeSet id="011-orders-initial" author="sezin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="orders" schemaName="telekom"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="orders" schemaName="telekom">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cart_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tckn" type="varchar(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(20)" defaultValue="pending">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE telekom.orders ADD CONSTRAINT orders_status_check CHECK (status IN ('pending', 'confirmed', 'activated'));</sql>
+
+        <addForeignKeyConstraint
+                baseTableSchemaName="telekom" baseTableName="orders" baseColumnNames="address_id"
+                referencedTableSchemaName="telekom" referencedTableName="addresses" referencedColumnNames="id"
+                constraintName="orders_address_id_fkey"/>
+        <addForeignKeyConstraint
+                baseTableSchemaName="telekom" baseTableName="orders" baseColumnNames="cart_id"
+                referencedTableSchemaName="telekom" referencedTableName="cart" referencedColumnNames="id"
+                constraintName="orders_cart_id_fkey"/>
+    </changeSet>
+
+</databaseChangeLog>

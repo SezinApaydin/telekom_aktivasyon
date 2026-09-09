@@ -5,8 +5,15 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
 
-    <changeSet id="1" author="sezin">
-        <tagDatabase tag="baseline"/>
-    </changeSet>
-
+    <include relativeToChangelogFile="true" file="001-sim-cards-initial.xml"/>
+    <include relativeToChangelogFile="true" file="002-insert-sim-card-data.xml"/>
+    <include relativeToChangelogFile="true" file="003-packages-initial.xml"/>
+    <include relativeToChangelogFile="true" file="004-insert-packages-data.xml"/>
+    <include relativeToChangelogFile="true" file="005-devices-initial.xml"/>
+    <include relativeToChangelogFile="true" file="006-insert-devices-data.xml"/>
+    <include relativeToChangelogFile="true" file="007-addresses-initial.xml"/>
+    <include relativeToChangelogFile="true" file="008-insert-addresses-data.xml"/>
+    <include relativeToChangelogFile="true" file="009-cart-initial.xml"/>
+    <include relativeToChangelogFile="true" file="010-cart-items-initial.xml"/>
+    <include relativeToChangelogFile="true" file="011-orders-initial.xml"/>
 </databaseChangeLog>
