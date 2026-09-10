@@ -16,4 +16,5 @@
     <include relativeToChangelogFile="true" file="009-cart-initial.xml"/>
     <include relativeToChangelogFile="true" file="010-cart-items-initial.xml"/>
     <include relativeToChangelogFile="true" file="011-orders-initial.xml"/>
+    <include relativeToChangelogFile="true" file="012-add-json-data-to-cart.xml"/>
 </databaseChangeLog>

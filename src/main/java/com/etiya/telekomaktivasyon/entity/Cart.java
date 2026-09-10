@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import java.time.LocalDateTime;
 
 @Entity
@@ -27,4 +29,8 @@ public class Cart {
 
     @Column(nullable = false, length = 20)
     private String status;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "json_data", columnDefinition = "jsonb")
+    private String jsonData;
 }
